@@ -1,0 +1,54 @@
+<div class="container" style="margin-top: 70px; margin-bottom: 40px;">
+  <div class="row">
+    <div class="col-sm-12" style = "width: 30rem; margin: auto">
+      <div *ngFor = "let comic of comic_list | async">
+        <h1>Edit a comic</h1>
+        <form [formGroup] = "comicForm" (ngSubmit)="onSubmit()">
+          <div>
+            <label for="issue_title">Issue Title</label><br>
+            <input type="text" name="issue_title" id="issue_title" placeholder="Name of the comic" ngDefaultControl [(ngModel)] = comic.issue_title
+              class="form-control" formControlName="issue_title"
+              [ngClass]="{ 'error' : isInvalid('issue_title') }">
+          </div><br>
+          <div class="form-group">
+            <label for="issue_description">Issue Description</label><br>
+            <textarea name="issue_description" id="issue_description"  rows="3" placeholder="Description of what the comic is about" ngDefaultControl [(ngModel)] = comic.issue_description
+              class="form-control" formControlName="issue_description">
+            </textarea>
+          </div><br>
+          <div class="form-group">
+            <label for="publish_date">Publish Date</label><br>
+            <input type="text" name="publish_date" id="publish_date" placeholder="When the comic was published (month dd yyyy)" ngDefaultControl [(ngModel)] = comic.publish_date
+              class="form-control" formControlName="publish_date"
+              [ngClass]="{ 'error' : isInvalid('publish_date') }">
+          </div><br>
+          <div class="form-group">
+            <label for="writer">Writer</label><br>
+            <input type="text" name="writer" id="writer" placeholder="Who wrote the comic" ngDefaultControl [(ngModel)] = comic.writer
+              class="form-control" formControlName="writer">
+          </div><br>
+          <div class="form-group">
+            <label for="penciler">Penciler</label><br>
+            <input type="text" name="penciler" id="penciler" placeholder="Who drew the images in the comic" ngDefaultControl [(ngModel)] = comic.penciler
+              class="form-control" formControlName="penciler">
+          </div><br>
+          <div class="form-group">
+            <label for="cover_artist">Cover Artist</label><br>
+            <input type="text" name="cover_artist" id="cover_artist" placeholder="Who made the cover art for the comic" ngDefaultControl [(ngModel)] = comic.cover_artist
+              class="form-control" formControlName="cover_artist">
+          </div><br>
+          <div class="form-group">
+            <label for="image_url">Image (Optional)</label><br>
+            <input type="text" name="image_url" id="image_url"
+              class="form-control" formControlName="image_url" placeholder="Optional url of the cover of the comic" ngDefaultControl [(ngModel)] = comic.image_url> 
+          </div><br>
+          <span *ngIf="isIncomplete()">
+            You must complete title and publish date fields
+          </span><br>
+          <button type="submit" *ngIf="!isIncomplete()"
+            class="btn btn-danger">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

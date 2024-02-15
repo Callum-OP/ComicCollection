@@ -1,0 +1,76 @@
+<div class="container" style="margin-top: 70px; margin-bottom: 40px;">
+  <div class="row">
+    <div class="col-sm-12" style = "width: 30rem; margin: auto">
+      <h3>Comics</h3>
+      <p>View our variety of comics below, click a comic to get more information about it.</p>
+      <p>Not finding what you're looking for? Use the search bar within the 
+        navigation to narrow the list.</p>
+      <ng-container *ngIf = "authService.isAuthenticated$ | async; else loggedOut">
+      <button class="btn btn-danger" onclick = "window.location.href='http://localhost:4200/newcomic';">
+        Add New Comic
+        </button><br><br>
+      </ng-container>
+      <ng-template #loggedOut>
+        <h5>Please login to add new comics</h5><br>
+      </ng-template>
+      <div *ngFor = "let comic of comic_list | async">
+        <div class="card text-white bg-danger mb-3" style = "width: 30rem; margin: auto; cursor: pointer" [routerLink] = "['/comics', comic._id]">
+          <img src="{{ comic.image_url }}" class="card-img-top">
+          <div class="card-header">
+            <h6 class= "card-title"> {{ comic.issue_title }} </h6>
+          </div>
+          <div class="card-body">
+            <p class = "card-text"> Published {{ comic.publish_date }} </p>
+          </div>
+          <div class="card-footer">
+            {{ comic.review_count }} reviews available
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6" style = "width: 30rem; margin: auto"><br>
+      <div class = "text-center">
+        <button class="btn btn-danger"
+            (click) = "previousPage(100)">
+          <100
+        </button>
+        <button class="btn btn-danger"
+            (click) = "previousPage(50)">
+          <50
+        </button>
+        <button class="btn btn-danger"
+            (click) = "previousPage(25)">
+          <25
+        </button>
+        <button class="btn btn-danger" style="margin-right: 10px;"
+            (click) = "previousPage(1)">
+          <1
+        </button>
+        <button class="btn btn-danger"
+            (click) = "nextPage(1)">
+          1>
+        </button>
+        <button class="btn btn-danger"
+            (click) = "nextPage(25)">
+          25>
+        </button>
+        <button class="btn btn-danger"
+            (click) = "nextPage(50)">
+          50>
+        </button>
+        <button class="btn btn-danger"
+            (click) = "nextPage(100)">
+          100>
+        </button><br><br>
+        <button class="btn btn-danger"
+          (click) = "thisPage(1)">
+          Back to first page
+        </button> 
+      </div><br><br>
+      <p>Page | {{ page }}</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="navbar navbar-expand-sm bg-danger navbar-dark fixed-top">
+  <span class="navbar-brand" style="margin-left: 10px;">
+    Comic Collections
+  </span>
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a routerLink="/" class="nav-link">Home</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/comics" (click)="resetPage()" class="nav-link">Comics</a>
+    </li>
+    <li class="nav-item" *ngIf = "authService.user$ | async as user">
+      <a routerLink="/collections/{{user.name}}" (click)="resetPage()" class="nav-link">Collections</a>
+    </li>
+    <input type="search" class="form-control" placeholder="Search by issue title" #filter>
+    <button (click)="searchBar(filter.value)" class="btn btn-danger">
+      Search
+    </button>
+  </ul>
+
+  <div class="form-inline ms-auto"
+    style = "margin-right: 10px">
+
+    <ng-container
+    *ngIf = "authService.isAuthenticated$ | async;
+    else loggedOut">
+    <button class="btn btn-outline-light"
+    (click) = "authService.logout()">Logout</button>
+
+    </ng-container>
+
+    <ng-template #loggedOut>
+    <button class="btn btn-outline-light"
+      (click) = "authService.loginWithRedirect( {
+        appState : { target : this.router.url } } )">
+    Login</button>
+    </ng-template>
+
+  </div>
+</div>
